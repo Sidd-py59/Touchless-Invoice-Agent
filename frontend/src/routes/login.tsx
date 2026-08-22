@@ -150,16 +150,20 @@ function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-white">
-      <nav className="flex h-14 items-center justify-between border-b border-[#D4E8EF] px-8">
+    <div 
+      className="flex min-h-screen flex-col bg-white"
+      style={{ backgroundImage: 'radial-gradient(circle at 15% 50%, rgba(30,58,138,0.06), transparent 25%), radial-gradient(circle at 85% 30%, rgba(30,58,138,0.06), transparent 25%)' }}
+    >
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sky-100/40 via-white to-white"></div>
+      <nav className="flex h-14 items-center justify-between border-b border-white/30 bg-white/40 backdrop-blur-xl px-8">
         <TiaLogo size="sm" />
-        <span className="rounded-full bg-[#F5F9FB] px-2.5 py-0.5 text-[11px] text-[#5A8A99]">
+        <span className="rounded-full bg-[#F8FAFC] px-2.5 py-0.5 text-[11px] text-[#64748B]">
           Secure sign-in
         </span>
       </nav>
 
       <div className="flex flex-1 items-center justify-center px-6 py-16">
-        <div className="w-full max-w-sm">
+        <div className="glass neu-raised w-full max-w-sm rounded-2xl border border-white/30 bg-white/50 p-8">
           <h1
             className="text-center text-2xl font-semibold text-foreground"
             style={{ letterSpacing: "-0.5px" }}
@@ -188,7 +192,7 @@ function LoginPage() {
               placeholder="Work email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-lg border border-[#D4E8EF] px-3.5 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-[#0D6E8A] focus:outline-none"
+              className="neu-inset w-full rounded-lg border border-[#E2E8F0] bg-white/50 px-3.5 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-[#00020A] focus:outline-none"
             />
             <input
               type="password"
@@ -197,7 +201,7 @@ function LoginPage() {
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-lg border border-[#D4E8EF] px-3.5 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-[#0D6E8A] focus:outline-none"
+              className="neu-inset w-full rounded-lg border border-[#E2E8F0] bg-white/50 px-3.5 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-[#00020A] focus:outline-none"
             />
 
             {isLocked && mode === "signin" ? (
@@ -222,7 +226,7 @@ function LoginPage() {
             <button
               type="submit"
               disabled={busy || (isLocked && mode === "signin")}
-              className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#0D6E8A] px-4 py-2.5 text-sm font-medium text-white transition hover:bg-[#0A5A72] disabled:opacity-60"
+              className="neu-btn flex w-full items-center justify-center gap-2 rounded-lg bg-[#00020A] px-4 py-2.5 text-sm font-medium text-white shadow-[0_0_15px_rgba(30,58,138,0.5)] transition hover:bg-[#00020A] hover:scale-[1.02] disabled:opacity-60 disabled:hover:scale-100"
             >
               {busy && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
               {isLocked && mode === "signin"
@@ -234,16 +238,16 @@ function LoginPage() {
           </form>
 
           <div className="my-5 flex items-center gap-3">
-            <div className="h-px flex-1 bg-[#D4E8EF]" />
-            <span className="text-[11px] uppercase tracking-widest text-[#5A8A99]">or</span>
-            <div className="h-px flex-1 bg-[#D4E8EF]" />
+            <div className="h-px flex-1 bg-[#E2E8F0]" />
+            <span className="text-[11px] uppercase tracking-widest text-[#64748B]">or</span>
+            <div className="h-px flex-1 bg-[#E2E8F0]" />
           </div>
 
           <button
             type="button"
             disabled={busy}
             onClick={() => run(loginWithGoogle)}
-            className="flex w-full items-center justify-center gap-2.5 rounded-lg border border-[#D4E8EF] bg-white px-4 py-2.5 text-sm font-medium text-foreground transition hover:border-[#0D6E8A] hover:bg-[#F5F9FB] disabled:opacity-60"
+            className="neu-raised flex w-full items-center justify-center gap-2.5 rounded-lg border border-[#E2E8F0] bg-white px-4 py-2.5 text-sm font-medium text-foreground transition hover:border-[#00020A] hover:bg-[#F8FAFC] disabled:opacity-60"
           >
             <svg className="h-4 w-4" viewBox="0 0 24 24">
               <path
@@ -282,8 +286,8 @@ function LoginPage() {
         </div>
       </div>
 
-      <footer className="border-t border-[#D4E8EF] px-8 py-4">
-        <p className="text-center text-[11px] text-[#5A8A99]">
+      <footer className="border-t border-[#E2E8F0] px-8 py-4">
+        <p className="text-center text-[11px] text-[#64748B]">
           TIA · Built for TASC Outsourcing · Secured with Firebase Authentication
         </p>
       </footer>

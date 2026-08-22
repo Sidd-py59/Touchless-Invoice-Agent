@@ -11,7 +11,7 @@ const navLinks = [
 
 export function MarketingHeader() {
   return (
-    <header className="sticky top-0 z-50 border-b border-[#D4E8EF] bg-white/85 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-white/30 bg-white/40 backdrop-blur-xl">
       <div className="mx-auto flex h-[72px] max-w-[1180px] items-center justify-between px-6 sm:px-10">
         <Link to="/" className="flex items-baseline gap-[3px] no-underline">
           <TiaLogo size="md" withDot />
@@ -22,7 +22,7 @@ export function MarketingHeader() {
             <Link
               key={link.to}
               to={link.to}
-              className="text-sm text-[#5A8A99] no-underline transition-colors hover:text-[#0D6E8A] [&.active]:font-semibold [&.active]:text-[#0D6E8A]"
+              className="text-sm text-[#64748B] no-underline transition-colors hover:text-[#00020A] [&.active]:font-semibold [&.active]:text-[#00020A]"
               activeOptions={{ exact: link.to === "/" }}
             >
               {link.label}
@@ -33,13 +33,13 @@ export function MarketingHeader() {
         <div className="flex items-center gap-5">
           <Link
             to="/app"
-            className="hidden text-sm font-medium text-[#5A8A99] no-underline transition-colors hover:text-[#0D6E8A] sm:inline"
+            className="hidden text-sm font-medium text-[#64748B] no-underline transition-colors hover:text-[#00020A] sm:inline"
           >
             Login
           </Link>
           <Link
             to="/contact"
-            className="whitespace-nowrap rounded-full bg-[#0D6E8A] px-[22px] py-[11px] text-[13.5px] font-semibold text-white no-underline transition-colors hover:bg-[#0A5A72]"
+            className="neu-btn whitespace-nowrap rounded-full bg-[#00020A] px-[22px] py-[11px] text-[13.5px] font-semibold text-white no-underline transition-colors hover:bg-[#00020A] hover:shadow-[0_0_15px_rgba(30,58,138,0.5)]"
           >
             Request a demo
           </Link>

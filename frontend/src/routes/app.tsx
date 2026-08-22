@@ -48,16 +48,16 @@ function PendingAccess() {
 
   return (
     <div className="flex min-h-screen flex-col bg-white">
-      <nav className="flex h-14 items-center justify-between border-b border-[#D4E8EF] px-8">
+      <nav className="flex h-14 items-center justify-between border-b border-[#E2E8F0] px-8">
         <TiaLogo size="sm" />
-        <span className="rounded-full bg-[#F5F9FB] px-2.5 py-0.5 text-[11px] text-[#5A8A99]">
+        <span className="rounded-full bg-[#F8FAFC] px-2.5 py-0.5 text-[11px] text-[#64748B]">
           {email}
         </span>
       </nav>
 
       <div className="flex flex-1 flex-col items-center justify-center px-6">
-        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#F5F9FB]">
-          <ShieldAlert className="h-5 w-5 text-[#0D6E8A]" />
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#F8FAFC]">
+          <ShieldAlert className="h-5 w-5 text-[#00020A]" />
         </div>
         <h1 className="mt-6 text-xl font-semibold text-foreground" style={{ letterSpacing: "-0.5px" }}>
           Your account is awaiting access
@@ -70,21 +70,21 @@ function PendingAccess() {
         <div className="mt-8 flex gap-2">
           <button
             onClick={checkAgain}
-            className="rounded-lg bg-[#0D6E8A] px-4 py-2 text-sm font-medium text-white transition hover:bg-[#0A5A72]"
+            className="rounded-lg bg-[#00020A] px-4 py-2 text-sm font-medium text-white transition hover:bg-[#00020A]"
           >
             Check again
           </button>
           <button
             onClick={handleLogout}
-            className="rounded-lg border border-[#D4E8EF] px-4 py-2 text-sm font-medium text-foreground transition hover:bg-[#F5F9FB]"
+            className="rounded-lg border border-[#E2E8F0] px-4 py-2 text-sm font-medium text-foreground transition hover:bg-[#F8FAFC]"
           >
             Sign out
           </button>
         </div>
       </div>
 
-      <footer className="border-t border-[#D4E8EF] px-8 py-4">
-        <p className="text-center text-[11px] text-[#5A8A99]">
+      <footer className="border-t border-[#E2E8F0] px-8 py-4">
+        <p className="text-center text-[11px] text-[#64748B]">
           TIA · Built for TASC Outsourcing · Secured with Firebase Authentication
         </p>
       </footer>

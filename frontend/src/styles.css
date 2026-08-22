@@ -56,42 +56,42 @@
 :root {
   /* Canvas: white page floor */
   --background: 0 0% 100%;
-  --foreground: 197 56% 17%;
+  --foreground: 222 47% 11%;
 
   /* Cards: pure white */
   --card: 0 0% 100%;
-  --card-foreground: 197 56% 17%;
+  --card-foreground: 222 47% 11%;
 
   --popover: 0 0% 100%;
-  --popover-foreground: 197 56% 17%;
+  --popover-foreground: 222 47% 11%;
 
-  /* Primary: TIA blue */
-  --primary: 193 82% 30%;
+  /* Primary: Navy blue */
+  --primary: 229 100% 12%;
   --primary-foreground: 0 0% 100%;
 
-  /* Secondary: light blue surface */
-  --secondary: 197 40% 96%;
-  --secondary-foreground: 197 56% 17%;
+  /* Secondary: light slate surface */
+  --secondary: 210 40% 98%;
+  --secondary-foreground: 222 47% 11%;
 
   /* Muted surfaces */
-  --muted: 197 30% 95%;
-  --muted-foreground: 193 26% 48%;
+  --muted: 214 32% 96%;
+  --muted-foreground: 215 16% 47%;
 
-  /* Accent: light blue tint */
-  --accent: 197 40% 96%;
-  --accent-foreground: 197 56% 17%;
+  /* Accent: light slate tint */
+  --accent: 210 40% 96%;
+  --accent-foreground: 222 47% 11%;
 
   --destructive: 0 84% 52%;
   --destructive-foreground: 0 0% 100%;
 
-  /* Borders: soft blue */
-  --border: 197 30% 88%;
-  --input: 197 30% 88%;
-  --ring: 193 82% 30%;
+  /* Borders: slate */
+  --border: 214 32% 91%;
+  --input: 214 32% 91%;
+  --ring: 229 100% 12%;
   --radius: 0.5rem;
 
   /* Charts — blue-themed */
-  --chart-1: 193 82% 30%;
+  --chart-1: 229 100% 12%;
   --chart-2: 160 60% 38%;
   --chart-3: 43 93% 48%;
   --chart-4: 280 65% 55%;
@@ -102,17 +102,17 @@
   --success-foreground: 0 0% 100%;
   --warning: 38 92% 44%;
   --warning-foreground: 30 80% 12%;
-  --surface: 197 30% 97%;
+  --surface: 210 40% 98%;
 
-  /* White sidebar with blue accents */
+  /* White sidebar with navy accents */
   --sidebar-background: 0 0% 100%;
-  --sidebar-foreground: 197 56% 17%;
-  --sidebar-primary: 193 82% 30%;
+  --sidebar-foreground: 222 47% 11%;
+  --sidebar-primary: 229 100% 12%;
   --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 197 40% 96%;
-  --sidebar-accent-foreground: 197 56% 17%;
-  --sidebar-border: 197 30% 90%;
-  --sidebar-ring: 193 82% 30%;
+  --sidebar-accent: 210 40% 96%;
+  --sidebar-accent-foreground: 222 47% 11%;
+  --sidebar-border: 214 32% 91%;
+  --sidebar-ring: 229 100% 12%;
 }
 
 * {
@@ -142,3 +142,16 @@ button, a, [role="button"] {
   transition-duration: 120ms;
   transition-timing-function: ease;
 }
+
+/* Glassmorphism */
+.glass { background: rgba(255,255,255,0.55); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.35); }
+.glass-dark { background: rgba(15,23,42,0.65); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08); }
+
+/* Neumorphism */
+.neu-raised { box-shadow: 6px 6px 14px rgba(15,23,42,0.08), -6px -6px 14px rgba(255,255,255,0.9); }
+.neu-inset  { box-shadow: inset 4px 4px 8px rgba(15,23,42,0.06), inset -4px -4px 8px rgba(255,255,255,0.8); }
+.neu-btn    { box-shadow: 4px 4px 10px rgba(15,23,42,0.15), -3px -3px 8px rgba(255,255,255,0.7); }
+
+/* 3D card tilt on hover */
+.card-3d { transition: transform 0.4s ease, box-shadow 0.4s ease; transform-style: preserve-3d; }
+.card-3d:hover { transform: perspective(800px) rotateX(-3deg) rotateY(3deg) translateY(-6px); }

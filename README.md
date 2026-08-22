@@ -46,9 +46,8 @@ TIA connects to a configured Gmail account via OAuth2 and runs an automatic back
 
 Timesheets never arrive in a consistent format. TIA handles every variant:
 
-- **PDF** — Layout-aware extraction using Docling; OCR fallback via Tesseract for scanned or print-to-PDF documents
-- **Excel & CSV** — Dynamic header detection across the first 15 rows; captures working days, overtime hours, leave days, and per-employee salary overrides
-- **Images & Handwritten Sheets** — OpenCV preprocessing + Tesseract OCR pipeline, followed by AI correction
+- **PDF, Excel & CSV** — Layout-aware extraction and structuring using Docling
+- **Images & Handwritten Sheets** — High-accuracy PaddleOCR pipeline, followed by AI correction
 - **Email Body** — Direct extraction from inline timesheet tables embedded in the email text
 
 **Business impact:** No more rejecting non-standard formats or asking clients to resubmit. TIA processes whatever they send.
@@ -198,9 +197,8 @@ Finance data demands defense in depth. TIA layers:
 | API Framework | FastAPI 0.111+ |
 | Database | SQLite via SQLAlchemy 2.0 async (aiosqlite) |
 | Migrations | Alembic |
-| PDF Extraction | Docling 2.0, pdf2image, pypdf |
-| OCR Engine | Tesseract, OpenCV |
-| Excel & CSV | Pandas 2.2, openpyxl 3.1 |
+| PDF, Excel & CSV Extraction | Docling 2.0 |
+| OCR Engine | PaddleOCR |
 | LLM Correction | Groq API — Llama 4 Scout 17B Instruct |
 | Invoice Rendering | Jinja2, xhtml2pdf |
 | Voice Synthesis | Smallest.ai Lightning TTS v3.1 |

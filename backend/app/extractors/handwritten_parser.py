@@ -15,7 +15,7 @@ class HandwrittenExtractor(ImageExtractor):
     """
 
     document_source = DocumentSource.HANDWRITTEN
-    parser_name = "opencv_tesseract_handwritten_table_parser_v1"
+    parser_name = "paddleocr_handwritten_table_parser_v1"
 
     def extract(self, path: Path) -> ExtractionResult:
         result = super().extract(path)

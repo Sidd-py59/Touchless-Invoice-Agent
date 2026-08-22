@@ -76,9 +76,9 @@ export function AppShell({ role }: AppShellProps) {
 
   return (
     <SidebarProvider>
-      <Sidebar variant="inset">
+      <Sidebar variant="inset" className="bg-white/40 backdrop-blur-xl border-r border-white/30">
         {/* Brand */}
-        <SidebarHeader className="border-b border-sidebar-border px-5 py-4">
+        <SidebarHeader className="border-b border-white/30 px-5 py-4 bg-transparent">
           <div>
             <TiaLogo size="sm" />
             <p className="text-[11px] text-muted-foreground">{roleLabel}</p>
@@ -103,8 +103,8 @@ export function AppShell({ role }: AppShellProps) {
                         tooltip={link.label}
                         className={
                           isActive
-                            ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium rounded-lg"
-                            : "text-sidebar-foreground/60 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground rounded-lg"
+                            ? "neu-inset bg-sidebar-accent/50 text-sidebar-accent-foreground font-medium rounded-lg"
+                            : "text-sidebar-foreground/60 hover:neu-inset hover:bg-sidebar-accent/30 hover:text-sidebar-accent-foreground rounded-lg transition-all"
                         }
                       >
                         <Link to={link.to}>
@@ -121,7 +121,7 @@ export function AppShell({ role }: AppShellProps) {
         </SidebarContent>
 
         {/* User footer */}
-        <SidebarFooter className="border-t border-sidebar-border px-4 py-3">
+        <SidebarFooter className="border-t border-white/30 px-4 py-3 bg-transparent">
           <div className="flex items-center gap-2.5">
             <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-muted text-xs font-semibold text-foreground">
               {userInitial}
@@ -141,9 +141,9 @@ export function AppShell({ role }: AppShellProps) {
         </SidebarFooter>
       </Sidebar>
 
-      <SidebarInset>
+      <SidebarInset className="bg-[#f0f6f8]">
         {/* Header */}
-        <header className="flex h-12 shrink-0 items-center gap-3 border-b bg-card px-5">
+        <header className="sticky top-0 z-10 flex h-12 shrink-0 items-center gap-3 border-b border-white/30 bg-white/40 backdrop-blur-xl px-5">
           <SidebarTrigger className="text-muted-foreground hover:text-foreground" />
           <div className="h-4 w-px bg-border" />
           <p className="text-sm font-medium text-foreground">{activeLink?.label ?? "TIA"}</p>
