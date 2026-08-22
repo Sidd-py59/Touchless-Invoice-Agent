@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Invoice {{ invoice.invoice_number }}</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Helvetica, Arial, sans-serif; color: #1a1a2e; background: #fff; font-size: 13px; }
+
+        /* ── Header ─────────────────────────────────────────────── */
+        .header-table { width: 100%; border-bottom: 3px solid {{ brand_color }}; padding-bottom: 20px; margin-bottom: 28px; }
+        .brand-name { font-size: 20px; font-weight: bold; color: {{ brand_color }}; letter-spacing: -0.5px; }
+        .brand-sub { font-size: 11px; color: #666; margin-top: 3px; }
+        .invoice-title { font-size: 28px; font-weight: 300; color: {{ brand_color }}; letter-spacing: 4px; text-transform: uppercase; text-align: right; }
+        .invoice-number { font-size: 13px; color: #444; text-align: right; margin-top: 4px; }
+        .invoice-dates { font-size: 12px; color: #888; text-align: right; margin-top: 8px; line-height: 1.7; }
+
+        /* ── Parties ─────────────────────────────────────────────── */
+        .parties-table { width: 100%; margin-bottom: 24px; }
+        .party-label { font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em; color: #888; margin-bottom: 6px; }
+        .party-name { font-size: 15px; font-weight: bold; color: #1a1a2e; margin-bottom: 4px; }
+        .party-detail { font-size: 12px; color: #555; line-height: 1.6; }
+
+        /* ── Period badge ────────────────────────────────────────── */
+        .period-badge { background: #e8f0fe; color: {{ brand_color }}; padding: 6px 14px; border-radius: 14px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 24px; }
+
+        /* ── Items table ─────────────────────────────────────────── */
+        .items-table { width: 100%; border-collapse: collapse; margin-bottom: 28px; }
+        .items-table thead th { background: {{ brand_color }}; color: #fff; padding: 10px 12px; text-align: left; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.06em; }
+        .items-table thead th.num { text-align: right; }
+        .items-table tbody td { padding: 10px 12px; border-bottom: 1px solid #eef0f4; font-size: 13px; color: #333; }
+        .items-table tbody td.num { text-align: right; }
+        .items-table tbody tr:nth-child(even) td { background: #f8faff; }
+        .items-table tbody tr:last-child td { border-bottom: none; }
+
+        /* ── Totals ──────────────────────────────────────────────── */
+        .totals-outer { width: 100%; margin-bottom: 36px; }
+        .totals-box { width: 320px; float: right; }
+        .totals-row { display: block; overflow: hidden; padding: 8px 0; border-bottom: 1px solid #eef0f4; font-size: 13px; color: #555; }
+        .totals-label { float: left; }
+        .totals-value { float: right; }
+        .totals-row.grand { border-top: 2px solid {{ brand_color }}; border-bottom: none; margin-top: 4px; padding-top: 12px; font-size: 16px; font-weight: bold; color: {{ brand_color }}; }
+        .clearfix { clear: both; }
+
+        /* ── Footer ──────────────────────────────────────────────── */
+        .footer-table { width: 100%; border-top: 1px solid #eef0f4; padding-top: 18px; margin-top: 20px; }
+        .footer-note { font-size: 11px; color: #888; line-height: 1.6; }
+        .footer-stamp { font-size: 10px; color: #bbb; text-align: right; }
+
+        /* ── Notes ───────────────────────────────────────────────── */
+        .notes-box { border: 1px solid #eef0f4; border-left: 3px solid {{ brand_color }}; padding: 12px 14px; margin-bottom: 24px; background: #fafbff; font-size: 12px; color: #444; line-height: 1.6; }
+    </style>
+</head>
+<body style="padding: 40px;">
+
+    <!-- Header -->
+    <table class="header-table" cellpadding="0" cellspacing="0">
+        <tr>
+            <td style="vertical-align: top; width: 50%;">
+                {% if logo_url %}
+                <img src="{{ logo_url }}" alt="Logo" style="max-height: 48px; margin-bottom: 6px;"><br>
+                {% endif %}
+                <div class="brand-name">TASC Outsource Services</div>
+                <div class="brand-sub">Finance Operations · Dubai, UAE</div>
+            </td>
+            <td style="vertical-align: top; text-align: right; width: 50%;">
+                <div class="invoice-title">Invoice</div>
+                <div class="invoice-number">{{ invoice.invoice_number }}</div>
+                <div class="invoice-dates">
+                    Issue Date: {{ invoice.invoice_date }}<br>
+                    Due Date: {{ invoice.due_date }}
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Parties -->
+    <table class="parties-table" cellpadding="0" cellspacing="0">
+        <tr>
+            <td style="vertical-align: top; width: 50%;">
+                <div class="party-label">Billed To</div>
+                <div class="party-name">{{ client.name }}</div>
+                <div class="party-detail">
+                    {% if client.billing_address %}{{ client.billing_address }}<br>{% endif %}
+                    {% if client.email %}{{ client.email }}{% endif %}
+                </div>
+            </td>
+            <td style="vertical-align: top; width: 50%; text-align: right;">
+                <div class="party-label">Issued By</div>
+                <div class="party-name">TASC Outsource Services LLC</div>
+                <div class="party-detail">
+                    PO Box 25295, Dubai, UAE<br>
+                    finance@tasc.com
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Period badge -->
+    <div class="period-badge">
+        Billing Period: {{ timesheet.billing_year }}-{{ "%02d"|format(timesheet.billing_month) }}
+        &nbsp;|&nbsp; {{ items|length }} Employee(s)
+    </div>
+
+    <!-- Custom notes if set -->
+    {% if invoice_notes %}
+    <div class="notes-box">{{ invoice_notes }}</div>
+    {% endif %}
+
+    <!-- Line items -->
+    <table class="items-table" cellpadding="0" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Employee</th>
+                <th>Employee Code</th>
+                <th class="num">Gross Salary</th>
+                <th class="num">Overtime</th>
+                <th class="num">Allowance</th>
+                <th class="num">Deduction</th>
+                <th class="num">Bill Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td><strong>{{ emp_name_map.get(item.employee_id, 'Unknown') }}</strong></td>
+                <td style="color:#888;">{{ emp_code_map.get(item.employee_id, 'EMP-' ~ item.employee_id) }}</td>
+                <td class="num">{{ invoice.currency }} {{ "{:,.2f}".format(item.gross_salary|float) }}</td>
+                <td class="num">{{ invoice.currency }} {{ "{:,.2f}".format(item.ot_amount|float) }}</td>
+                <td class="num">{{ invoice.currency }} {{ "{:,.2f}".format(item.allowance|float) }}</td>
+                <td class="num" style="color:#c00;">-{{ invoice.currency }} {{ "{:,.2f}".format(item.deduction|float) }}</td>
+                <td class="num"><strong>{{ invoice.currency }} {{ "{:,.2f}".format(item.bill_amount|float) }}</strong></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Totals -->
+    <div class="totals-outer">
+        <div class="totals-box">
+            <div class="totals-row">
+                <span class="totals-label">Subtotal</span>
+                <span class="totals-value">{{ invoice.currency }} {{ "{:,.2f}".format(invoice.subtotal|float) }}</span>
+                <div class="clearfix"></div>
+            </div>
+            <div class="totals-row">
+                <span class="totals-label">Service Charge</span>
+                <span class="totals-value">{{ invoice.currency }} {{ "{:,.2f}".format(invoice.service_charge|float) }}</span>
+                <div class="clearfix"></div>
+            </div>
+            <div class="totals-row">
+                <span class="totals-label">VAT / Tax</span>
+                <span class="totals-value">{{ invoice.currency }} {{ "{:,.2f}".format(invoice.tax|float) }}</span>
+                <div class="clearfix"></div>
+            </div>
+            <div class="totals-row grand">
+                <span class="totals-label">Grand Total</span>
+                <span class="totals-value">{{ invoice.currency }} {{ "{:,.2f}".format(invoice.grand_total|float) }}</span>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <!-- Footer -->
+    <table class="footer-table" cellpadding="0" cellspacing="0">
+        <tr>
+            <td class="footer-note">
+                Payment due within {{ payment_terms_days }} days of invoice date.<br>
+                For billing queries, contact <strong>finance@tasc.com</strong>.
+            </td>
+            <td class="footer-stamp">
+                Generated by TIA · Touchless Invoice Agent<br>
+                {{ generated_at_str }}
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>
