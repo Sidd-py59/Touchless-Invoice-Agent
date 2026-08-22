@@ -11,10 +11,19 @@ const navLinks = [
 
 export function MarketingHeader() {
   return (
-    <header className="sticky top-0 z-50 border-b border-white/30 bg-white/40 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 bg-white/95 border-b-2 border-primary/10 tech-panel">
       <div className="mx-auto flex h-[72px] max-w-[1180px] items-center justify-between px-6 sm:px-10">
-        <Link to="/" className="flex items-baseline gap-[3px] no-underline">
-          <TiaLogo size="md" withDot />
+        <Link to="/" className="flex items-center gap-[15px] no-underline">
+          <div className="hidden sm:block tech-bracket">
+            <TiaLogo size="md" withDot className="px-2" />
+          </div>
+          <div className="sm:hidden">
+            <TiaLogo size="md" withDot />
+          </div>
+          <div className="hidden lg:flex flex-col gap-0.5">
+            <span className="tech-text text-primary">SYS.ID: TIA-2025-001</span>
+            <span className="tech-text text-accent">STATUS: ONLINE</span>
+          </div>
         </Link>
 
         <nav className="hidden items-center gap-10 md:flex">
@@ -22,7 +31,7 @@ export function MarketingHeader() {
             <Link
               key={link.to}
               to={link.to}
-              className="text-sm text-[#64748B] no-underline transition-colors hover:text-[#00020A] [&.active]:font-semibold [&.active]:text-[#00020A]"
+              className="text-sm font-mono font-semibold uppercase tracking-wider text-slate-500 no-underline transition-colors hover:text-primary [&.active]:text-primary"
               activeOptions={{ exact: link.to === "/" }}
             >
               {link.label}
@@ -33,15 +42,15 @@ export function MarketingHeader() {
         <div className="flex items-center gap-5">
           <Link
             to="/app"
-            className="hidden text-sm font-medium text-[#64748B] no-underline transition-colors hover:text-[#00020A] sm:inline"
+            className="hidden text-sm font-mono font-semibold uppercase tracking-wider text-slate-500 no-underline transition-colors hover:text-primary sm:inline"
           >
             Login
           </Link>
           <Link
             to="/contact"
-            className="neu-btn whitespace-nowrap rounded-full bg-[#00020A] px-[22px] py-[11px] text-[13.5px] font-semibold text-white no-underline transition-colors hover:bg-[#00020A] hover:shadow-[0_0_15px_rgba(30,58,138,0.5)]"
+            className="tech-btn no-underline"
           >
-            Request a demo
+            Request Demo
           </Link>
         </div>
       </div>

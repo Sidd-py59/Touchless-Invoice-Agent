@@ -80,8 +80,8 @@ class GmailIngestionService:
         query = self._query(from_email=from_email, to_email=to_email)
 
         processed_keys = self._load_processed_ids()
-        access_token = self._access_token()
-        message_refs = self._list_messages(access_token=access_token, query=query, max_results=max_results)
+        access_token = await self._access_token()
+        message_refs = await self._list_messages(access_token=access_token, query=query, max_results=max_results)
 
         message_results: list[dict[str, Any]] = []
         processed_message_count = 0
@@ -91,9 +91,9 @@ class GmailIngestionService:
 
         for message_ref in message_refs:
             message_id = str(message_ref["id"])
-            message = self._get_message(access_token=access_token, message_id=message_id)
+            message = await self._get_message(access_token=access_token, message_id=message_id)
             headers = self._headers(message)
-            attachments = self._extract_attachments(access_token=access_token, message=message)
+            attachments = await self._extract_attachments(access_token=access_token, message=message)
             attachment_results = []
 
             for attachment in attachments:
@@ -194,7 +194,7 @@ class GmailIngestionService:
         parts.append("has:attachment")
         return " ".join(parts)
 
-    def _access_token(self) -> str:
+    async def _access_token(self) -> str:
         payload = urlencode(
             {
                 "client_id": settings.GMAIL_CLIENT_ID,
@@ -203,7 +203,7 @@ class GmailIngestionService:
                 "grant_type": "refresh_token",
             }
         ).encode("utf-8")
-        data = self._request_json(
+        data = await self._request_json(
             GOOGLE_TOKEN_URL,
             method="POST",
             data=payload,
@@ -215,30 +215,30 @@ class GmailIngestionService:
             raise GmailApiError("Google OAuth token refresh did not return an access_token")
         return str(token)
 
-    def _list_messages(self, *, access_token: str, query: str, max_results: int) -> list[dict[str, Any]]:
+    async def _list_messages(self, *, access_token: str, query: str, max_results: int) -> list[dict[str, Any]]:
         params = urlencode({"q": query, "maxResults": max_results})
-        data = self._request_json(
+        data = await self._request_json(
             f"{GMAIL_API_BASE}/users/me/messages?{params}",
             auth_token=access_token,
         )
         return list(data.get("messages") or [])
 
-    def _get_message(self, *, access_token: str, message_id: str) -> dict[str, Any]:
+    async def _get_message(self, *, access_token: str, message_id: str) -> dict[str, Any]:
         params = urlencode({"format": "full"})
-        return self._request_json(
+        return await self._request_json(
             f"{GMAIL_API_BASE}/users/me/messages/{message_id}?{params}",
             auth_token=access_token,
         )
 
-    def _get_attachment(self, *, access_token: str, message_id: str, attachment_id: str) -> bytes:
-        data = self._request_json(
+    async def _get_attachment(self, *, access_token: str, message_id: str, attachment_id: str) -> bytes:
+        data = await self._request_json(
             f"{GMAIL_API_BASE}/users/me/messages/{message_id}/attachments/{attachment_id}",
             auth_token=access_token,
         )
         encoded = str(data.get("data") or "")
         return self._decode_gmail_data(encoded)
 
-    def _extract_attachments(self, *, access_token: str, message: dict[str, Any]) -> list[GmailAttachment]:
+    async def _extract_attachments(self, *, access_token: str, message: dict[str, Any]) -> list[GmailAttachment]:
         message_id = str(message["id"])
         attachments: list[GmailAttachment] = []
         for part in self._walk_parts(message.get("payload") or {}):
@@ -249,7 +249,7 @@ class GmailIngestionService:
             attachment_id = body.get("attachmentId")
             content_type = part.get("mimeType") or mimetypes.guess_type(filename)[0]
             if attachment_id:
-                data = self._get_attachment(access_token=access_token, message_id=message_id, attachment_id=str(attachment_id))
+                data = await self._get_attachment(access_token=access_token, message_id=message_id, attachment_id=str(attachment_id))
             else:
                 data = self._decode_gmail_data(str(body.get("data") or ""))
             attachments.append(
@@ -376,7 +376,26 @@ class GmailIngestionService:
         return safe or "attachment"
 
     @staticmethod
-    def _request_json(
+    async def _request_json(
+        url: str,
+        *,
+        method: str = "GET",
+        data: bytes | None = None,
+        headers: dict[str, str] | None = None,
+        auth_token: str | None,
+    ) -> dict[str, Any]:
+        import asyncio
+        return await asyncio.to_thread(
+            GmailIngestionService._request_json_sync,
+            url,
+            method=method,
+            data=data,
+            headers=headers,
+            auth_token=auth_token,
+        )
+
+    @staticmethod
+    def _request_json_sync(
         url: str,
         *,
         method: str = "GET",

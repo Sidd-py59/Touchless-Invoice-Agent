@@ -1,13 +1,5 @@
 /**
- * Reusable TIA brand logo — renders "TIA" with:
- *   T, A → solid blue (#00020A)
- *   I    → cyan-to-green gradient
- *
- * Props:
- *   size     — "sm" | "md" | "lg" (text size)
- *   variant  — "dark" (default, blue on white) | "light" (white T/A on dark backgrounds)
- *   withDot  — adds the small brand dot after "A"
- *   className — extra classes on the wrapper span
+ * TIA brand logo — "TIA" with gradient accent on the "I"
  */
 
 interface TiaLogoProps {
@@ -35,7 +27,7 @@ export function TiaLogo({
   withDot = false,
   className = "",
 }: TiaLogoProps) {
-  const solidColor = variant === "dark" ? "#00020A" : "#FFFFFF";
+  const solidColor = variant === "dark" ? "#1e293b" : "#FFFFFF";
 
   return (
     <span
@@ -44,7 +36,7 @@ export function TiaLogo({
       <span style={{ color: solidColor }}>T</span>
       <span
         style={{
-          background: "linear-gradient(135deg, #3B82F6, #2DC653)",
+          background: "linear-gradient(135deg, #2563eb, #3b82f6)",
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
           backgroundClip: "text",
@@ -57,7 +49,7 @@ export function TiaLogo({
         <span
           className={`mb-1 inline-block rounded-full ${dotSizeMap[size]}`}
           style={{
-            background: "linear-gradient(135deg, #3B82F6, #2DC653)",
+            background: "linear-gradient(135deg, #2563eb, #3b82f6)",
           }}
         />
       )}
